@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.robotwhispererllc.com/company.schema.json",
+  "title": "Company",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "description": "MongoDB ObjectID()",
+      "type": "string"
+    },
+    "servicer": {
+      "description": "An external company which performs servicing for this company",
+      "type": ["object", "null"],
+      "properties": {
+        "billing_company": {
+          "description": "The name of the company being billed",
+          "type": "string"
+        },
+        "po_no": {
+          "description": "The post office number of the company being billed",
+          "type": "string"
+        },
+        "address": {
+          "description": "The address of the company being billed",
+          "type": "string"
+        }
+      },
+      "required": ["billing_company", "po_no", "address"]
+    },
+    "address": {
+      "description": "The address of the company to be billed; excluded if the company uses an external servicer",
+      "type": ["string", "null"]
+    },
+    "po_no": {
+      "description": "The post office number of the company to be billed; excluded if company uses an external servicer",
+      "type": ["string", "null"]
+    }
+  },
+  "if": {
+    "properties": {
+      "servicer": { "type": "null" }
+    }
+  },
+  "then": {
+    "required": ["po_no", "address"]
+  },
+  "else": {
+    "properties": {
+      "po_no": { "type": "null" },
+      "address": { "type": "null" }
+    }
+  },
+  "required": ["_id"]
+}

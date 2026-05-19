@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.robotwhispererllc.com/service_report.schema.json",
+  "title": "Service Report",
+  "description": "An instance of a service report",
+  "type": "object",
+  "properties": {
+    "_id": {
+        "description": "The MongoDB ObjectID associated with this service report",
+        "type": "string"
+    },
+    "name": {
+      "description": "The name of the report; programmatically generated",
+      "type": "string"
+    },
+    "our_reference": {
+      "type": "object",
+      "properties": {
+        "service_report_no": {
+          "description": "The unique identifier of the service report; auto-incrementing",
+          "type": ["integer", "null"]
+        },
+        "trw_contact": {
+          "description": "The contact at TRW who performed the service", // A user
+          "type": "string"
+        },
+        "po_no": {
+          "description": "The post office number of the company to be billed", // Based on company
+          "type": "string"
+        },
+        "billing_company": {
+          "description": "The company to be billed", // Based on company
+          "type": "string"
+        },
+        "address": {
+          "description": "The address of the billing company", // Based on company
+          "type": "string"
+        }
+      },
+      "required": [
+        "service_report_no",
+        "trw_contact",
+        "po_no",
+        "billing_company",
+        "address"
+      ]
+    },
+    "service_report": {
+      "description": "The main content of the service report",
+      "type": "object",
+      "properties": {
+        "company": {
+          "description": "the company being serviced",
+          "type": "string"
+        },
+        "contact_person_one": {
+          "description": "the first contact person",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            }
+          },
+          "required": ["name", "email", "phone"]
+        },
+        "contact_person_two": {
+          "description": "The second contact person; optional",
+          "type": ["object", "null"],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            }
+          },
+          "required": ["name", "email", "phone"]
+        },
+        "service_call_information": {
+          "description": "Information about the service call",
+          "type": "object",
+          "properties": {
+            "purpose_of_call": {
+              "description": "The issue the call aimed to fix",
+              "type": "string"
+            },
+            "date_reported": {
+              "description": "The date the issue was reported",
+              "type": "string",
+              "format": "date"
+            },
+            "system_down": {
+              "description": "Whether the system was down at the time of issuing the service request",
+              "type": ["boolean", "null"]
+            },
+            "status_of_call": {
+              "description": "Whether the call has been completed: true == closed, false == open",
+              "type": ["boolean", "null"]
+            }
+          },
+          "required": [
+            "purpose_of_call",
+            "date_reported",
+            "system_down",
+            "status_of_call"
+          ]
+        },
+        "instrument_configuration": {
+          "description": "information about the instrument being operated on",
+          "type": "object",
+          "properties": {
+            "manufacturer": {
+              "description": "The manufacturer of the instrument",
+              "type": "string"
+            },
+            "model": {
+              "description": "The model of the instrument",
+              "type": "string"
+            },
+            "serial_number": {
+              "description": "The serial number of the instrument",
+              "type": "string"
+            }
+          },
+          "required": ["manufacturer", "model", "serial_number"]
+        },
+        "service_dates": {
+          "description": "information about when the service was done",
+          "type": "object",
+          "properties": {
+            "times": {
+              "description": "A list of clock-in/clock-out times for client work",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "is_travel": {
+                    "type": "boolean"
+                  },
+                  "is_onsite": {
+                    "type": "boolean"
+                  },
+                  "arrival": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "departure": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "required": ["_id", "arrival", "departure"]
+            }
+          },
+          "required": ["times", "description"]
+        },
+        "service_detail": {
+          "description": "bullet point list of things done for the client",
+          "type": "string"
+        }
+      },
+      "required": [
+        "company",
+        "contact_person_one",
+        "contact_person_two",
+        "service_call_information",
+        "instrument_config",
+        "service_dates",
+        "hours",
+        "service_detail"
+      ]
+    }
+  },
+  "required": ["name", "our_reference", "service_report"]
+}

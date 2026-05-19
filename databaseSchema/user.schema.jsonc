@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.robotwhispererllc.com/user.schema.json",
+  "title": "User",
+  "description": "A user of the app, used for OAuth",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "description": "The MongoDB ObjectID associated with this service report",
+      "type": "string"
+    },
+    "google_id": {
+      "description": "Google OAuth2.0 id; uniquely identifies users",
+      "type": "string"
+    },
+    "email": {
+      "description": "the user's email",
+      "type": "string"
+    },
+    "access_token": {
+      "description": "The token used to make google api calls on this user's behalf",
+      "type": "string"
+    },
+    "refresh_token": {
+      "description": "The token used to refresh access"
+    },
+    "token_expiry": {
+      "description": "Timestamp for when the access token expires",
+      "type": "string"
+      // "format": "date-time"; idk if this is the exact format it uses so commented out for now
+    },
+    "name": {
+      "description": "The user's name",
+      "type": "string"
+    }
+  }
+}
