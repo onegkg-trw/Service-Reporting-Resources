@@ -152,17 +152,17 @@
                   "is_onsite": {
                     "type": "boolean"
                   },
-                  "arrival": {
+                  "start": {
                     "type": "string",
                     "format": "date-time"
                   },
-                  "departure": {
+                  "end": {
                     "type": "string",
                     "format": "date-time"
                   }
                 }
               },
-              "required": ["_id", "arrival", "departure"]
+              "required": ["_id", "start", "end"]
             }
           },
           "required": ["times", "description"]
