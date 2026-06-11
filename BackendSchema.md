@@ -1,5 +1,7 @@
 # Backend Plan
 
+All POST/PATCH requests return the full created object, schema can be found in the backend schema folder and will match the associated get responses
+
 GET: `/api/reports` -> Returns a list of the reports and basic metadata for listing or querying a specific report
 Response:
 
@@ -23,24 +25,22 @@ Response:
 GET: `/api/company/{company}/reports` -> Returns the reports for a specific company
 Response: is identical to above but more limited-->
 
-GET: `/api/company/{id}/info` -> Returns metadata about a company
+GET: `/api/companies/{id}` -> Returns metadata about a company
 Response:
 
 ```{jsonc}
 {
   "id": "{id}",
   "name": "valo",
-  "po_no": "09463", // Excluded if servicer is present
   "address": "1200 South Street, Lexington, MA XXXXX", // Excluded if servicer is present
   "servicer": { // Optional
     "name": "Thermo-Fisher",
-    "po_no": "{po number}",
     "address": "500 Crescent Circle, Roxbury, MA XXXXX"
   }
 }
 ```
 
-GET: `/api/company/` -> Returns a list of companies
+GET: `/api/companies` -> Returns a list of companies
 Returns:
 
 ```{jsonc}
@@ -118,9 +118,9 @@ Response:
 }
 ```
 
-GET: `/api/reports/{id}/time` -> Returns the time entries for a report
+GET: `/api/reports/{id}/times` -> Returns the time entries for a report
 Response:
-
+TODO: Update to fit updated TimeEntry schema
 ```{jsonc}
         [
           {
@@ -140,9 +140,10 @@ Response:
           // ...
 ```
 
-POST: `/api/reports/{id}/time` -> Add a time entry, entry can be incomplete
+POST: `/api/reports/{id}/times` -> Add a time entry, entry can be incomplete
 Request:
 
+TODO: Update to match updated schema
 ```{jsonc}
 {
   "is_travel": true, // Optional
@@ -153,20 +154,7 @@ Request:
 }
 ```
 
-Response:
-
-```{jsonc}
-{
-  "id": "{id}",
-  "is_travel": true,
-  "is_onsite": false,
-  "start": "HH:MM",
-  "end": "HH:MM",
-  "description": "what did you do"
-}
-```
-
-PATCH: `/api/reports/{id}/time/{time_id}` -> Updates one or more times from a complete or incomplete time entry
+PATCH: `/api/reports/{id}/times/{time_id}` -> Updates one or more times from a complete or incomplete time entry
 Request:
 
 ```{jsonc}
@@ -179,11 +167,9 @@ Request:
 }
 ```
 
-Responds with the full, updated time entry
-
 POST: `/api/reports/` -> Add a new report
 Request:
-
+TODO: Update to match modern schema
 ```{jsonc}
 // All fields are optional unless explicitly stated otherwise
 // Some unlisted fields will be autofilled based on company name, these can be modified with a subsequent PATCH request
@@ -220,7 +206,6 @@ Request:
   },
 }
 ```
-Responds with the full json of the new object, (see the GET request for shape)
 
 PATCH: `/api/reports/{id}` -> Makes non-time updates to a report
 Request
@@ -229,7 +214,6 @@ Request
 {
   "name": "Report2",
   "our_reference": {
-    "service_report_no": 135,
     "trw_contact": "Rita Vicaire",
     "po_no": "{po_no}",
     "billing_company": "valo",
@@ -268,7 +252,7 @@ Responds with the full updated object json
 DELETE: `/api/reports/{id}` -> Deletes the report
 Responds with `204 No Content` and no body
 
-DELETE: `/api/reports/{id}/time/{time_id}` -> Deletes a time entry
+DELETE: `/api/reports/{id}/times/{time_id}` -> Deletes a time entry
 Responds with `204 No Content` and no body
 
 GET: `/api/users/` -> Gets a list of users
@@ -287,8 +271,13 @@ Response:
 ]
 ```
 
-PUT: `/api/users` -> Adds a user
+GET: `/api/users/{id}` -> Gets full data about the user
+
+PATCH: `/api/users/{id}` -> Updates the User
+
+POST: `/api/users` -> Adds a user
 Request: 
+TODO: Figure out user schema based on how oauth works
 ```{jsonc}
 {
   "google_id": "108234567890123456789",
