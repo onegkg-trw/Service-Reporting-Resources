@@ -2,6 +2,7 @@
 
 - The Service Reporting monorepo can be found [here](https://github.com/TheRobotWhisperer/ServiceReporting)
 - Backend Schema (WIP): [BackendSchema.md](BackendSchema.md)
+- Source of Truth for all implemented backend routes can be found [here](https://dashboard.scalar.com/registry/apis/tWz3hyttZ7HDbCPxVJy7O)
 - Jira board for the project can be found [here](https://onegkg.atlassian.net/jira/software/projects/KAN/boards/2)
 - Tentative MongoDB database schema can be found in the databaseSchema folder
 - Figma Mock-Ups can be found [here](https://www.figma.com/design/CZYebJlVbFjnCUZVBRhE0K/Service-Reporting-App?node-id=0-1&t=POFM1Zx6tWqLp1Fi-1)
